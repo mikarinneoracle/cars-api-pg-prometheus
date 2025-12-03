@@ -11,7 +11,7 @@ const port = 3000;
 const { Pool } = pg;
 var pool; 
 var register = new promClient.Registry();
-var configFile = "connection.txt";
+var configFile = "/secrets/connection.txt";
 
 // Create custom metrics for a counter
 const counter = new promClient.Counter({
