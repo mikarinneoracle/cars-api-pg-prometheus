@@ -167,7 +167,7 @@ app.get('/cars', (req, res) => {
   });
 });
 
-app.get('/cars:id', (req, res) => {
+app.get('/car:id', (req, res) => {
   counter.inc();
   if(!pool) {
     try {
