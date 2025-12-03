@@ -41,7 +41,7 @@ app.get('/metrics', async (_req, res) => {
 
 const options = {
   definition: {
-    openapi: "1.0.0",
+    openapi: "3.0.0",
     info: {
       title: "Cars API",
       version: "1.0.0"
@@ -167,7 +167,7 @@ app.get('/cars', (req, res) => {
   });
 });
 
-app.get('/car:id', (req, res) => {
+app.get('/car/:id', (req, res) => {
   counter.inc();
   if(!pool) {
     try {
