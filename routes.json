@@ -19,6 +19,23 @@
         "ANY"
       ],
       "path": "/docs/{path*}"
+    },
+    {
+      "backend": {
+        "body": null,
+        "headers": [
+          {
+            "name": "Location",
+            "value": "/docs/"
+          }
+        ],
+        "status": 301,
+        "type": "STOCK_RESPONSE_BACKEND"
+      },
+      "methods": [
+        "ANY"
+      ],
+      "path": "/"
     }
   ]
 }
