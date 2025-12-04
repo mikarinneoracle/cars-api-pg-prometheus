@@ -140,13 +140,13 @@ app.use(
 async function createPool()
 {
   connectionString = fs.readFileSync(configFile, 'utf8');
-  console.log(connectionString);
   if(connectionString != null)
   {
     pool = new Pool({
         connectionString,
         ssl: { rejectUnauthorized: false }
     });
+    console.log("Pool created, " + connectionString);
   } else {
     throw new Error("Not ready");
   }
