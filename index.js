@@ -137,25 +137,31 @@ app.use(
  *         description: Some server error
  */
 
-app.get('/cars', (req, res) => {
+async function createPool()
+{
+  connectionString = fs.readFileSync(configFile, 'utf8');
+  console.log(connectionString);
+  if(connectionString != null)
+  {
+    pool = new Pool({
+        connectionString,
+        ssl: { rejectUnauthorized: false }
+    });
+  } else {
+    throw new Error("Not ready");
+  }
+}
+
+app.get('/cars', async (req, res, next) => {
   counter.inc();
   if(!pool) {
     try {
-      connectionString = fs.readFileSync(configFile, 'utf8');
-      console.log(connectionString);
-      if(connectionString != null)
-      {
- 
-        pool = new Pool({
-           connectionString,
-           ssl: { rejectUnauthorized: false }
-        });
-      }
-     } catch (err)
-     {
-      res.status(503).send("Not Ready");
+      await createPool();
+    } catch (err)
+    {
+      res.status(503).send(err.message);
       return;
-     }
+    }
   }
   pool.query('SELECT json_agg(cars) cars FROM cars', function(dberr, dbres) {
     if (dberr) {
@@ -167,25 +173,16 @@ app.get('/cars', (req, res) => {
   });
 });
 
-app.get('/car/:id', (req, res) => {
+app.get('/car/:id', async (req, res, next) => {
   counter.inc();
   if(!pool) {
     try {
-      connectionString = fs.readFileSync(configFile, 'utf8');
-      console.log(connectionString);
-      if(connectionString != null)
-      {
- 
-        pool = new Pool({
-           connectionString,
-           ssl: { rejectUnauthorized: false }
-        });
-      }
-     } catch (err)
-     {
-      res.status(503).send("Not Ready");
+      await createPool();
+    } catch (err)
+    {
+      res.status(503).send(err.message);
       return;
-     }
+    }
   }
   pool.query('SELECT json_agg(cars) cars FROM cars WHERE id= $1', [ req.params['id'] ], function(dberr, dbres) {
     if (dberr) {
@@ -201,25 +198,16 @@ app.get('/car/:id', (req, res) => {
   });
 });
 
-app.get('/price/:name', (req, res) => {
+app.get('/price/:name', async (req, res, next) => {
   counter.inc();
   if(!pool) {
     try {
-      connectionString = fs.readFileSync(configFile, 'utf8');
-      console.log(connectionString);
-      if(connectionString != null)
-      {
- 
-        pool = new Pool({
-           connectionString,
-           ssl: { rejectUnauthorized: false }
-        });
-      }
-     } catch (err)
-     {
-      res.status(503).send("Not Ready");
+      await createPool();
+    } catch (err)
+    {
+      res.status(503).send(err.message);
       return;
-     }
+    }
   }
   pool.query('SELECT json_agg(cars) cars FROM cars WHERE name= $1', [ req.params['name'] ], function(dberr, dbres) {
     if (dberr) {
