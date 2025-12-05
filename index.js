@@ -182,6 +182,7 @@ app.get('/cars', async (req, res, next) => {
         res.status(500).send(dberr.message);
     } else {
         var json = { "cars": dbres.rows[0].cars };
+        console.log(json);
         res.send(JSON.stringify(json));
     }
   });
@@ -206,6 +207,7 @@ app.get('/car/:id', async (req, res, next) => {
         res.status(404).send("Not Found");
       } else {
           var json = { "car": dbres.rows[0].cars[0] }
+          console.log(json);
           res.send(JSON.stringify(json));
       }
     }
@@ -231,6 +233,7 @@ app.get('/price/:name', async (req, res, next) => {
         res.status(404).send("Not Found");
       } else {
           var json = { "car": dbres.rows[0].cars[0] }
+          console.log(json);
           res.send(JSON.stringify(json));
       }
     }
