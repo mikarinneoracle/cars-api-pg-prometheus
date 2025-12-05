@@ -12,12 +12,26 @@ const { Pool } = pg;
 var pool; 
 var register = new promClient.Registry();
 var configFile = "/secrets/connection.txt";
+var logFile = "/var/log/app.log";
 
 // Create custom metrics for a counter
 const counter = new promClient.Counter({
     name: "counter",
     help: "Custom counter for Cars API",
 });
+
+// Create a write stream to append logs to a file
+const logStream = fs.createWriteStream(logFile, { flags: 'a' });
+
+// Patch stdout
+process.stdout.write = (chunk, ...args) => {
+  try {
+    logStream.write(chunk); // write to file
+  } catch (err) {
+    origStdoutWrite(`\n[Log Error] Failed to write stdout: ${err}\n`);
+  }
+  return origStdoutWrite(chunk, ...args); // still print to console
+};
 
 var collectDefaultMetrics = promClient.collectDefaultMetrics;
 register.registerMetric(counter);
