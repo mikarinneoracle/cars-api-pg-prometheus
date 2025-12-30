@@ -27,8 +27,5 @@ jobs:
       run: |
         docker build . --build-arg APIGW_PATH=/api -t fra.ocir.io/${{ secrets.TENANCY_NAMESPACE }}/cars-api-pg:1.0.0
         docker push -q fra.ocir.io/${{ secrets.TENANCY_NAMESPACE }}/cars-api-pg:1.0.0
-    - name: Update Stack Manager with webhook
-      run: |
-        curl -X PUT -H "Authorization: Basic ${{ secrets.STACK_MGR_AUTH }}" "${{ secrets.STACK_MGR_URL }}/webhook/restart?ciname=cars-api&compartmentname=mika.rinne"
-
+        
         
