@@ -2,7 +2,7 @@
 
 ## Build containers
 
-Build containers with GitHub Actions <a href="./containers.yml">pipeline</a>.
+Build containers with GitHub Actions <a href=".github/workflows/containers.yml">pipeline</a>.
 <p>
 
 This requires three secrets:
