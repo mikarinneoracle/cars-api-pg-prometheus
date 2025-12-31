@@ -25,7 +25,7 @@ jobs:
           password: ${{ secrets.AUTH_TOKEN }}
     - name: Build and Push the image to OCIR
       run: |
-        docker build . --build-arg APIGW_PATH=${{ variables.API_GW_PATH }} -t fra.ocir.io/${{ secrets.TENANCY_NAMESPACE }}/cars-api-pg:1.0.0
+        docker build . --build-arg APIGW_PATH=${{ vars.API_GW_PATH }} -t fra.ocir.io/${{ secrets.TENANCY_NAMESPACE }}/cars-api-pg:1.0.0
         docker push -q fra.ocir.io/${{ secrets.TENANCY_NAMESPACE }}/cars-api-pg:1.0.0
         
         
